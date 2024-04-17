@@ -23,15 +23,11 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "com.example.reminderapp"
-    compileSdkVersion flutter.compileSdkVersion
+    namespace "com.example.reminder"
+    compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
-    defaultConfig {
-        multiDexEnabled true
-    }
 
     compileOptions {
-        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -46,7 +42,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.reminderapp"
+        applicationId "com.example.reminder"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -68,6 +64,4 @@ flutter {
     source '../..'
 }
 
-dependencies {
-    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
-}
+dependencies {}
