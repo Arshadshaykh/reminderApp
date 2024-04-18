@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:reminderapp/controller/notification_controller.dart';
+import 'package:reminder/controller/notification_controller.dart';
 
 import 'views/home.dart';
 
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      home: const HomePage(),
     );
   }
 }
