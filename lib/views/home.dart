@@ -62,9 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             GestureDetector(
               onTap: () {
-                LocalNotification.close(
-                  id: 1
-                );
+                LocalNotification.close(id: 1);
               },
               child: Container(
                 padding: EdgeInsets.all(10),

@@ -59,7 +59,8 @@ class LocalNotification {
             ticker: 'ticker');
     const NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.periodicallyShow(1, title, body, RepeatInterval.everyMinute, notificationDetails);
+    await flutterLocalNotificationsPlugin.periodicallyShow(
+        1, title, body, RepeatInterval.everyMinute, notificationDetails);
   }
 
   static Future showScheduleNotification({
@@ -69,7 +70,9 @@ class LocalNotification {
     // required RepeatInterval repeatInterval,
     required String payload,
   }) async {}
-  static Future close({required int id,})async{
+  static Future close({
+    required int id,
+  }) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 }
