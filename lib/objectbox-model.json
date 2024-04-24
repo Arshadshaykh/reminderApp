@@ -1,0 +1,133 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:8060929219629081792",
+      "lastPropertyId": "7:4447728869959404878",
+      "name": "Alarm",
+      "flags": 2,
+      "properties": [
+        {
+          "id": "1:7791174109551043957",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1312375829830876639",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:2154382072574961279",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:2532264417801061915",
+          "name": "time",
+          "type": 9
+        },
+        {
+          "id": "5:4766481406429766239",
+          "name": "date",
+          "type": 9
+        },
+        {
+          "id": "6:2661413459694457643",
+          "name": "repeat",
+          "type": 9
+        },
+        {
+          "id": "7:4447728869959404878",
+          "name": "color",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:8873842812152204191",
+      "lastPropertyId": "5:1719279541491291160",
+      "name": "Note",
+      "flags": 2,
+      "properties": [
+        {
+          "id": "1:3074657124040132434",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6335705169714339273",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:4569310950331442244",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:779800061797180739",
+          "name": "date",
+          "type": 9
+        },
+        {
+          "id": "5:1719279541491291160",
+          "name": "color",
+          "type": 9
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "3:7733068626788435465",
+      "lastPropertyId": "5:257441109583103846",
+      "name": "Todo",
+      "flags": 2,
+      "properties": [
+        {
+          "id": "1:882983128830991163",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:3936719633399996985",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "3:6413448706745364907",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "4:3135455801190713232",
+          "name": "date",
+          "type": 9
+        },
+        {
+          "id": "5:257441109583103846",
+          "name": "color",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "3:7733068626788435465",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

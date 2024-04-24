@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder/const/app_colors.dart';
+import 'package:reminder/const/font_styles.dart';
 import 'package:reminder/controller/getx_controller.dart';
 
 import '../const/assets_images.dart';
@@ -87,14 +88,17 @@ import '../const/assets_images.dart';
 // }
 
 class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
-  final bool? wantLeading;
+  final bool? wantLeading,wantAction;
   final Color backgroundColor;
   final double elevation;
+  final List<Widget>? actions;
 
   const CustomAppBar2({
     required this.backgroundColor,
     required this.elevation,
     this.wantLeading,
+    this.wantAction,
+    this.actions,
     Key? key,
   }) : super(key: key);
 
@@ -154,13 +158,11 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
         builder: (MyController controller) {
           return Text(
             controller.appBarTitle,
-            style: TextStyle(
-                color: AppColors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.w700),
+            style: AppStyle.headingS20W700,
           );
         },
       ),
+      actions: wantAction==true ?actions:[],
       backgroundColor: backgroundColor,
       elevation: elevation,
     );
