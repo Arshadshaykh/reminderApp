@@ -1,36 +1,55 @@
 
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-@Sync()
 class Alarm{
-@Id()
 int id;
 
-String title;
-String description;
-String time;
-String date;
-String repeat;
-String color;
+String? title;
+String? time;
+@Property(type: PropertyType.date)
+DateTime? date;
+Color? color;
+bool isActive=false,isRepeat=false;
 
-Alarm(this.id,this.title,this.description,this.time,this.date,this.repeat,this.color,);
+
+
+Alarm({this.id=0,required this.title,required this.time,this.date,this.color,});
 }
 
+// @Entity()
+// @Sync()
+// class Note{
+// @Id()
+// int id;
+
+// String title;
+// String description;
+
+// String date;
+
+// String color;
+
+// Note(this.id,this.title,this.description,this.date,this.color,);
+// }
+
+
 @Entity()
-@Sync()
-class Note{
-@Id()
-int id;
+class Note {
+  int id;
 
-String title;
-String description;
+  String text;
+  String? comment;
 
-String date;
+  /// Note: Stored in milliseconds without time zone info.
+  DateTime date;
 
-String color;
+  Note(this.text, {this.id = 0, this.comment, DateTime? date})
+      : date = date ?? DateTime.now();
 
-Note(this.id,this.title,this.description,this.date,this.color,);
+  String get dateFormat => DateFormat('dd.MM.yyyy hh:mm:ss').format(date);
 }
 
 @Entity()

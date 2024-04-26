@@ -5,11 +5,16 @@ import 'package:reminder/controller/getx_controller.dart';
 import 'package:reminder/controller/notification_controller.dart';
 import 'package:reminder/views/home_page.dart';
 
+import 'controller/awes_notify_controller.dart';
+import 'controller/object_box.dart';
 import 'views/home.dart';
 
+late ObjectBox objectbox;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await LocalNotification.init();
+  await AwesomeNotifySevices.initAwesomeNotification();
+  // await LocalNotification.init();
+  objectbox = await ObjectBox.create();
   runApp(MyApp());
 }
 

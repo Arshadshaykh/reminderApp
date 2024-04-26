@@ -5,6 +5,7 @@ import 'package:reminder/const/font_styles.dart';
 import 'package:reminder/controller/getx_controller.dart';
 
 import '../const/assets_images.dart';
+import 'add_button.dart';
 
 // class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 //   final String title;
@@ -106,54 +107,7 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      leading: wantLeading==true ?Stack(
-        alignment: Alignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            width: 44,
-            height: 44,
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 110, 228, 255),
-                  Color.fromARGB(221, 29, 26, 233)
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              boxShadow: const [
-                BoxShadow(
-                    offset: Offset(0, -20),
-                    color: Color(0xff2B3445),
-                    blurRadius: 30,
-                    spreadRadius: 0),
-                BoxShadow(
-                    offset: Offset(0, 20),
-                    color: Color(0xff10141C),
-                    blurRadius: 30,
-                    spreadRadius: 0)
-              ],
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            height: 40,
-            width: 40,
-            padding: EdgeInsets.all(11),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [AppColors.themeBlue, AppColors.themePurple],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Image.asset(AssetsImages.backArrowBtn),
-          ),
-        ],
-      ):SizedBox.shrink(),
+      leading: wantLeading==true ?addButton(AssetsImages.add):SizedBox.shrink(),
       title: GetBuilder<MyController>(
         builder: (MyController controller) {
           return Text(
@@ -165,6 +119,7 @@ class CustomAppBar2 extends StatelessWidget implements PreferredSizeWidget {
       actions: wantAction==true ?actions:[],
       backgroundColor: backgroundColor,
       elevation: elevation,
+      clipBehavior: Clip.none,
     );
   }
 

@@ -55,7 +55,7 @@ class _BottomTileTranslationState extends State<BottomTileTranslation>
                 child: Container(
                   decoration: BoxDecoration(
                     boxShadow: [
-                      BoxShadow(color: AppColors.black,blurRadius:0,offset: Offset(0,20) )
+                      BoxShadow(color: AppColors.black,blurRadius:0,offset: Offset(0,5) )
                     ],
                     gradient: const LinearGradient(
                       // stops: [0.3,0.8],
