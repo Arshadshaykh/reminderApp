@@ -21,38 +21,43 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(1, 1950350653031628799),
+      id: const obx_int.IdUid(1, 5839166201501930632),
       name: 'Alarm',
-      lastPropertyId: const obx_int.IdUid(6, 2340539885667086082),
+      lastPropertyId: const obx_int.IdUid(7, 5697419954113333738),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 6168996576873709688),
+            id: const obx_int.IdUid(1, 239525046679328489),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 2527050443097092847),
+            id: const obx_int.IdUid(2, 5233474580023615124),
+            name: 'notiId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 7697032147630857417),
             name: 'title',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 7687343251449417141),
+            id: const obx_int.IdUid(4, 2076024412038738326),
             name: 'time',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 7652853266996965465),
+            id: const obx_int.IdUid(5, 7298116340143756502),
             name: 'date',
             type: 10,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 5837003554040137488),
+            id: const obx_int.IdUid(6, 686626334474270425),
             name: 'isActive',
             type: 1,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(6, 2340539885667086082),
+            id: const obx_int.IdUid(7, 5697419954113333738),
             name: 'isRepeat',
             type: 1,
             flags: 0)
@@ -60,28 +65,28 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(2, 8666197987969900800),
+      id: const obx_int.IdUid(2, 7140114935541266141),
       name: 'Note',
-      lastPropertyId: const obx_int.IdUid(4, 9159291167038541208),
+      lastPropertyId: const obx_int.IdUid(4, 8177421582254201672),
       flags: 0,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 1286648177855367466),
+            id: const obx_int.IdUid(1, 6319600187328506550),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 7211990292550123313),
+            id: const obx_int.IdUid(2, 3148187689653382137),
             name: 'text',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 1307979773786910671),
+            id: const obx_int.IdUid(3, 8520754225297548494),
             name: 'comment',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 9159291167038541208),
+            id: const obx_int.IdUid(4, 8177421582254201672),
             name: 'date',
             type: 10,
             flags: 0)
@@ -89,33 +94,33 @@ final _entities = <obx_int.ModelEntity>[
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
-      id: const obx_int.IdUid(3, 8134372615682761060),
+      id: const obx_int.IdUid(3, 3213137160174948915),
       name: 'Todo',
-      lastPropertyId: const obx_int.IdUid(5, 8798368045768342485),
+      lastPropertyId: const obx_int.IdUid(5, 7116727272606252807),
       flags: 2,
       properties: <obx_int.ModelProperty>[
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(1, 4057233195776694921),
+            id: const obx_int.IdUid(1, 4310671167616246686),
             name: 'id',
             type: 6,
             flags: 1),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(2, 970340770707071258),
+            id: const obx_int.IdUid(2, 9109998538391837803),
             name: 'title',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(3, 4890439155408288526),
+            id: const obx_int.IdUid(3, 1854785477045985947),
             name: 'description',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(4, 165421716467480944),
+            id: const obx_int.IdUid(4, 4219024881139538478),
             name: 'date',
             type: 9,
             flags: 0),
         obx_int.ModelProperty(
-            id: const obx_int.IdUid(5, 8798368045768342485),
+            id: const obx_int.IdUid(5, 7116727272606252807),
             name: 'color',
             type: 9,
             flags: 0)
@@ -159,7 +164,7 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(3, 8134372615682761060),
+      lastEntityId: const obx_int.IdUid(3, 3213137160174948915),
       lastIndexId: const obx_int.IdUid(0, 0),
       lastRelationId: const obx_int.IdUid(0, 0),
       lastSequenceId: const obx_int.IdUid(0, 0),
@@ -185,13 +190,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
               object.title == null ? null : fbb.writeString(object.title!);
           final timeOffset =
               object.time == null ? null : fbb.writeString(object.time!);
-          fbb.startTable(7);
+          fbb.startTable(8);
           fbb.addInt64(0, object.id);
-          fbb.addOffset(1, titleOffset);
-          fbb.addOffset(2, timeOffset);
-          fbb.addInt64(3, object.date?.millisecondsSinceEpoch);
-          fbb.addBool(4, object.isActive);
-          fbb.addBool(5, object.isRepeat);
+          fbb.addInt64(1, object.notiId);
+          fbb.addOffset(2, titleOffset);
+          fbb.addOffset(3, timeOffset);
+          fbb.addInt64(4, object.date?.millisecondsSinceEpoch);
+          fbb.addBool(5, object.isActive);
+          fbb.addBool(6, object.isRepeat);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -199,22 +205,30 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
           final dateValue =
-              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 10);
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12);
           final idParam =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           final titleParam = const fb.StringReader(asciiOptimization: true)
-              .vTableGetNullable(buffer, rootOffset, 6);
-          final timeParam = const fb.StringReader(asciiOptimization: true)
               .vTableGetNullable(buffer, rootOffset, 8);
+          final timeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final notiIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           final dateParam = dateValue == null
               ? null
               : DateTime.fromMillisecondsSinceEpoch(dateValue);
+          final isActiveParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 14);
+          final isRepeatParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 16);
           final object = Alarm(
-              id: idParam, title: titleParam, time: timeParam, date: dateParam)
-            ..isActive =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 12, false)
-            ..isRepeat =
-                const fb.BoolReader().vTableGet(buffer, rootOffset, 14, false);
+              id: idParam,
+              title: titleParam,
+              time: timeParam,
+              notiId: notiIdParam,
+              date: dateParam,
+              isActive: isActiveParam,
+              isRepeat: isRepeatParam);
 
           return object;
         }),
@@ -305,24 +319,28 @@ class Alarm_ {
   /// see [Alarm.id]
   static final id = obx.QueryIntegerProperty<Alarm>(_entities[0].properties[0]);
 
+  /// see [Alarm.notiId]
+  static final notiId =
+      obx.QueryIntegerProperty<Alarm>(_entities[0].properties[1]);
+
   /// see [Alarm.title]
   static final title =
-      obx.QueryStringProperty<Alarm>(_entities[0].properties[1]);
+      obx.QueryStringProperty<Alarm>(_entities[0].properties[2]);
 
   /// see [Alarm.time]
   static final time =
-      obx.QueryStringProperty<Alarm>(_entities[0].properties[2]);
+      obx.QueryStringProperty<Alarm>(_entities[0].properties[3]);
 
   /// see [Alarm.date]
-  static final date = obx.QueryDateProperty<Alarm>(_entities[0].properties[3]);
+  static final date = obx.QueryDateProperty<Alarm>(_entities[0].properties[4]);
 
   /// see [Alarm.isActive]
   static final isActive =
-      obx.QueryBooleanProperty<Alarm>(_entities[0].properties[4]);
+      obx.QueryBooleanProperty<Alarm>(_entities[0].properties[5]);
 
   /// see [Alarm.isRepeat]
   static final isRepeat =
-      obx.QueryBooleanProperty<Alarm>(_entities[0].properties[5]);
+      obx.QueryBooleanProperty<Alarm>(_entities[0].properties[6]);
 }
 
 /// [Note] entity fields to define ObjectBox queries.

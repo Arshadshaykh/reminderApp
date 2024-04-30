@@ -3,17 +3,24 @@ import 'package:flutter/rendering.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import '../controller/awes_notify_controller.dart';
 import '../main.dart';
+import 'functions.dart';
 
 Future<dynamic> showMyBottomSheet(
   context,
   index,
+  {id}
 ) {
   final noteInputController = TextEditingController();
   final noteCommentController = TextEditingController();
   final alarmTitleController = TextEditingController();
-  Future<void> addAlarm(String time) async {
+  Future<void> addAlarm(int id,String time) async {
     if (alarmTitleController.text.isEmpty) return;
-    await objectbox.addAlarm(alarmTitleController.text,time);
+    await objectbox.addAlarm(id,alarmTitleController.text, time);
+    alarmTitleController.text = '';
+  }
+  Future<void> updateAlarm(int id,int notiId,String time,bool isActive) async {
+    if (alarmTitleController.text.isEmpty) return;
+    await objectbox.updateAlarm(id,notiId,alarmTitleController.text, time,isActive);
     alarmTitleController.text = '';
   }
 
@@ -23,14 +30,17 @@ Future<dynamic> showMyBottomSheet(
         noteInputController.text, noteCommentController.text);
     noteInputController.text = '';
   }
-String extractTimeFromString(String timeOfDayString) {
-  if (!timeOfDayString.startsWith("TimeOfDay(") || !timeOfDayString.endsWith(")")) {
-    return ""; // Handle invalid input gracefully (optional)
-  }
 
-  // Extract the time part within parentheses
-  return timeOfDayString.substring(10, timeOfDayString.length - 1);
-}
+  // String extractTimeFromString(String timeOfDayString) {
+  //   if (!timeOfDayString.startsWith("TimeOfDay(") ||
+  //       !timeOfDayString.endsWith(")")) {
+  //     return ""; // Handle invalid input gracefully (optional)
+  //   }
+
+  //   // Extract the time part within parentheses
+  //   return timeOfDayString.substring(10, timeOfDayString.length - 1);
+  // }
+
   return showModalBottomSheet(
       showDragHandle: true,
       isScrollControlled: true,
@@ -71,9 +81,14 @@ String extractTimeFromString(String timeOfDayString) {
                               showPicker(
                                 context: context,
                                 value: Time.fromTimeOfDay(TimeOfDay.now(), 0),
-                                onChange: (v) async{
-                                  await AwesomeNotifySevices().showScheduleNotification(hour:v.hour ,min: v.minute);
-                                  addAlarm(extractTimeFromString(v.toString()));
+                                onChange: (v) async {
+                                  await AwesomeNotifySevices()
+                                      .showScheduleNotification(
+                                          hour: v.hour,
+                                          min: v.minute,
+                                          title: alarmTitleController.text,
+                                          id: id);
+                                  addAlarm(id,extractTimeFromString(v.toString()));
                                   Navigator.pop(context);
                                 },
                               ),

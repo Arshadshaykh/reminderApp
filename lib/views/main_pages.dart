@@ -6,14 +6,17 @@ import 'package:reminder/const/font_styles.dart';
 import 'package:reminder/controller/getx_controller.dart';
 import '../const/app_colors.dart';
 import '../const/assets_images.dart';
+import '../controller/awes_notify_controller.dart';
 import '../custom_paint/pinted_bottom_bar.dart';
 import '../main.dart';
 import '../model/models.dart';
+import '../utils/functions.dart';
 
 MyController controller = Get.find();
 
 Widget alarmScreenWidget() {
-  return const AlarmPage().animate()
+  return const AlarmPage()
+      .animate()
       .slideX(begin: -0.5, end: 0, duration: Duration(milliseconds: 200));
   // return Container(
   //   margin: EdgeInsets.only(right: 25, left: 25),
@@ -150,7 +153,8 @@ class _MyTodoPageState extends State<TodoPage> {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          width: 2, color: const Color.fromARGB(255, 77, 88, 113)),
+                          width: 2,
+                          color: const Color.fromARGB(255, 77, 88, 113)),
                       gradient: LinearGradient(colors: [
                         const Color(0xff222834).withOpacity(0.7),
                         const Color(0xff353F54).withOpacity(0.8),
@@ -247,81 +251,137 @@ class _ALarmPageState extends State<AlarmPage> {
   DateTime? alarmTime;
   int? alarmId;
 
+  bool switchValue = false;
 
-  Card Function(BuildContext, int) _itemBuilder(List<Alarm> alarms) =>
-      (BuildContext context, int index) => Card(
-            clipBehavior: Clip.hardEdge,
-            elevation: 0,
-            color: AppColors.transparent,
-            shadowColor: AppColors.transparent,
-            surfaceTintColor: AppColors.transparent,
-            margin: const EdgeInsets.only(bottom: 20),
-            child: ClipRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                child: Container(
-                  width: double.infinity,
-                  // height: 200,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 2, color: const Color.fromARGB(255, 77, 88, 113)),
-                    gradient: LinearGradient(colors: [
-                      const Color(0xff222834).withOpacity(0.7),
-                      const Color(0xff353F54).withOpacity(0.8),
-                    ]),
-                    borderRadius: BorderRadius.circular(15),
+  Future<void> updateAlarm(
+      int id, int notiId, String time, String title, bool isActive) async {
+    int hour = int.parse(time.substring(0, 2));
+    int min = int.parse(time.substring(3));
+    if (isActive) {
+      AwesomeNotifySevices().showScheduleNotification(
+          hour: hour, min: min, title: title, id: notiId);
+    } else {
+      AwesomeNotifySevices().cancelShaduledNotification(notiId);
+    }
+    await objectbox.updateAlarm(id, notiId, title, time, isActive);
+  }
+
+  Card Function(BuildContext, int) _itemBuilder(List<Alarm> alarms) {
+    return (BuildContext context, int index) {
+      int hour=0;
+      // bool isDay=false;
+      if (alarms.isNotEmpty) {
+        hour = int.parse(alarms[index].time!.substring(0, 2));
+      }
+        bool isDay = hour >= 6 && hour <= 18;
+      return Card(
+        clipBehavior: Clip.hardEdge,
+        elevation: 0,
+        color: AppColors.transparent,
+        shadowColor: AppColors.transparent,
+        surfaceTintColor: AppColors.transparent,
+        margin: const EdgeInsets.only(bottom: 20),
+        child: ClipRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
+            child: Container(
+              width: double.infinity,
+              // height: 200,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                border: Border.all(
+                    width: 2, color: const Color.fromARGB(255, 77, 88, 113)),
+                gradient: LinearGradient(colors: [
+                  const Color(0xff222834).withOpacity(0.7),
+                  const Color(0xff353F54).withOpacity(0.8),
+                ]),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    isDay ? AssetsImages.sun : AssetsImages.moon,
+                    height: 35,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        AssetsImages.sun,
-                        height: 35,
-                      ),
-                      SizedBox(
-                        width: 200,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            (alarms[index].title == '' ||
-                                    alarms[index].title == null)
-                                ? const SizedBox.shrink()
-                                : Text(
-                                    alarms[index].title ?? '',
-                                    style: TextStyle(color: AppColors.white),
-                                  ),
-                            Text(
-                              alarms[index].time.toString() ?? '',
-                              style: AppStyle.headingS20W700,
-                            ),
-                          ],
+                  SizedBox(
+                    width: 200,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        (alarms[index].title == '' ||
+                                alarms[index].title == null)
+                            ? const SizedBox.shrink()
+                            : Text(
+                                alarms[index].title ?? '',
+                                style: TextStyle(color: AppColors.white),
+                              ),
+                        Text(
+                          alarms[index].time.toString() ?? '',
+                          style: AppStyle.headingS20W700,
                         ),
-                      ),
-                      Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: (){
-                              objectbox.removeAlarm(alarms[index].id);
-                            },
-                            child: Icon(Icons.close_rounded,color: AppColors.white,)),
-                          Switch(
+                      ],
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                          onTap: () async {
+                            await AwesomeNotifySevices()
+                                .cancelShaduledNotification(
+                                    alarms[index].notiId);
+                            objectbox.removeAlarm(alarms[index].id);
+                          },
+                          child: Icon(
+                            Icons.close_rounded,
+                            color: AppColors.white,
+                          )),
+                      GetBuilder<MyController>(
+                        builder: (MyController controller) {
+                          return Switch(
                               value: alarms[index].isActive ?? false,
                               onChanged: (v) {
-                                setState(() {
-                                  alarms[index].isActive = v;
-                                });
-                              }),
-                        ],
-                      )
+                                controller.changeSwitchValue(v);
+                                // setState(() {
+                                //   switchValue = v;
+
+                                // });
+                                updateAlarm(
+                                    alarms[index].id,
+                                    alarms[index].notiId,
+                                    alarms[index].time.toString(),
+                                    alarms[index].title.toString(),
+                                    v);
+                              });
+                        },
+                        // child: Switch(
+                        //     value: alarms[index].isActive ?? false,
+                        //     onChanged: (v) {
+                        //       setState(() {
+                        //         switchValue = v;
+
+                        //       });
+                        //       updateAlarm(
+                        //             alarms[index].id,
+                        //             alarms[index].notiId,
+                        //             alarms[index].time.toString(),
+                        //             alarms[index].title.toString(),
+                        //             v);
+                        //     }),
+                      ),
                     ],
-                  ),
-                ),
+                  )
+                ],
               ),
             ),
-          );
+          ),
+        ),
+      );
+    };
+  }
 
   @override
   Widget build(BuildContext context) => Column(children: <Widget>[

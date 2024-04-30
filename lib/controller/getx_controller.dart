@@ -6,6 +6,13 @@ class MyController extends GetxController {
 
   int _currentIndex = 0;
   int get currentIndex => _currentIndex;
+  bool _switchValue = false;
+  bool get switchValue => _switchValue;
+
+  void changeSwitchValue(bool value) {
+    _switchValue = value;
+    update();
+  }
 
   void upDateAppBarTitle(index) {
     switch (index) {

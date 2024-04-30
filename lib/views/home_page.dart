@@ -10,6 +10,7 @@ import '../const/assets_images.dart';
 import '../utils/add_button.dart';
 import '../utils/bottomSheet.dart';
 import '../utils/bottombar.dart';
+import '../utils/functions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -67,8 +68,10 @@ class _HomePageState extends State<HomePage> {
                     ? addButton(
                         AssetsImages.add,
                         callback: () {
+                          var id=generateUniqueId();
+                          // return;
                           Future.delayed(const Duration(milliseconds: 100), ()async {
-                            await showMyBottomSheet(context, controller.currentIndex,);
+                            await showMyBottomSheet(id:id,context, controller.currentIndex,);
                           });
                         },
                       )

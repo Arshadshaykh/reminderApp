@@ -27,9 +27,9 @@ class ObjectBox {
     if (_noteBox.isEmpty()) {
       _putDemoData();
     }
-    if (_alarmBox.isEmpty()) {
-      _putAlarmDemoData();
-    }
+    // if (_alarmBox.isEmpty()) {
+    //   _putAlarmDemoData();
+    // }
   }
 
   /// Create an instance of ObjectBox to use throughout the app.
@@ -63,14 +63,11 @@ class ObjectBox {
   void _putAlarmDemoData() {
     final demoAlarms = [
       Alarm(
+          notiId: 0,
           title: 'Add a Title by tapping on + button',
           time: DateTime.now().toString()),
-      Alarm(
-          title: 'Alarm 1',
-          time: DateTime.now().toString()),
-      Alarm(
-          title: 'Alarm 2',
-          time: DateTime.now().toString()),
+      Alarm(notiId: 0, title: 'Alarm 1', time: DateTime.now().toString()),
+      Alarm(notiId: 0, title: 'Alarm 2', time: DateTime.now().toString()),
     ];
     _alarmBox.putManyAsync(demoAlarms);
   }
@@ -101,11 +98,23 @@ class ObjectBox {
 */
   Stream<List<Alarm>> getAlarm() {
     final builder =
-        _alarmBox.query().order(Alarm_.date,flags: Order.descending );
+        _alarmBox.query().order(Alarm_.date, flags: Order.descending);
     return builder.watch(triggerImmediately: true).map((query) => query.find());
   }
 
-  Future<void> addAlarm(String title,String time) =>
-      _alarmBox.putAsync(Alarm(title: title, time: time));
+  Future<void> addAlarm(int id, String title, String time) => _alarmBox
+      .putAsync(Alarm(notiId: id, title: title, time: time, isActive: true));
+
+  Future<void> updateAlarm(
+          int id, int notiId, String title, String time, bool isActive) =>
+      _alarmBox.putAsync(
+          Alarm(
+              id: id,
+              notiId: notiId,
+              title: title,
+              time: time,
+              isActive: isActive),
+          mode: PutMode.update);
+
   Future<void> removeAlarm(int id) => _alarmBox.removeAsync(id);
 }

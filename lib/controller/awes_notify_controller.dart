@@ -25,27 +25,43 @@ class AwesomeNotifySevices {
         ],
         debug: true);
   }
-  
-Future showScheduleNotification({int? hour,int? min}) async{
-   String localTimeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
-  String utcTimeZone = await AwesomeNotifications().getLocalTimeZoneIdentifier();
 
-  await AwesomeNotifications().createNotification(
-      content: NotificationContent(
-          id: 0,
+  Future showScheduleNotification(
+      {int? hour, int? min, required String title,required int id}) async {
+    String localTimeZone =
+        await AwesomeNotifications().getLocalTimeZoneIdentifier();
+    String utcTimeZone =
+        await AwesomeNotifications().getLocalTimeZoneIdentifier();
+
+    await AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: id,
           channelKey: 'basic_channel',
-          title: 'Notification every single minute',
-          body:
-              'This notification was scheduled to repeat every minute.',
+          title: title,
+          body: '',
           // notificationLayout: NotificationLayout.BigPicture,
           // bigPicture: 'asset://assets/images/melted-clock.png',
           category: NotificationCategory.Alarm,
           wakeUpScreen: true,
-          autoDismissible: false
-          ),
-      // schedule: NotificationInterval(interval: 60, timeZone: localTimeZone, repeats: true,allowWhileIdle: true)
-      schedule: NotificationCalendar(hour: hour,minute: min,preciseAlarm: true,allowWhileIdle: true,repeats:true ),
-      
-      );
-}
+          autoDismissible: false,
+        ),
+        // schedule: NotificationInterval(interval: 60, timeZone: localTimeZone, repeats: true,allowWhileIdle: true)
+        schedule: NotificationCalendar(
+            hour: hour,
+            minute: min,
+            preciseAlarm: true,
+            allowWhileIdle: true,
+            repeats: true),
+        actionButtons: [
+          NotificationActionButton(
+              key: 'stopButton',
+              label: 'Stop',
+              actionType: ActionType.DismissAction),
+          NotificationActionButton(key: 'snoozeButton', label: 'Snooze')
+        ]);
+  }
+
+  Future cancelShaduledNotification(int id)async{
+    await AwesomeNotifications().cancel(id);
+  }
 }

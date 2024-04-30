@@ -1,22 +1,28 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
-class Alarm{
-int id;
+class Alarm {
+  int id;
+  int notiId;
+  String? title;
+  String? time;
+  @Property(type: PropertyType.date)
+  DateTime? date;
+  Color? color;
+  bool? isActive, isRepeat;
 
-String? title;
-String? time;
-@Property(type: PropertyType.date)
-DateTime? date;
-Color? color;
-bool isActive=false,isRepeat=false;
-
-
-
-Alarm({this.id=0,required this.title,required this.time,this.date,this.color,});
+  Alarm({
+    this.id = 0,
+    required this.title,
+    required this.time,
+    required this.notiId,
+    this.date,
+    this.color,
+    this.isActive,
+    this.isRepeat
+  });
 }
 
 // @Entity()
@@ -34,7 +40,6 @@ Alarm({this.id=0,required this.title,required this.time,this.date,this.color,});
 
 // Note(this.id,this.title,this.description,this.date,this.color,);
 // }
-
 
 @Entity()
 class Note {
@@ -54,16 +59,22 @@ class Note {
 
 @Entity()
 @Sync()
-class Todo{
-@Id()
-int id;
+class Todo {
+  @Id()
+  int id;
 
-String title;
-String description;
+  String title;
+  String description;
 
-String date;
+  String date;
 
-String color;
+  String color;
 
-Todo(this.id,this.title,this.description,this.date,this.color,);
+  Todo(
+    this.id,
+    this.title,
+    this.description,
+    this.date,
+    this.color,
+  );
 }
