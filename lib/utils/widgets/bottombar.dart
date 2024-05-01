@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../const/app_colors.dart';
-import '../controller/getx_controller.dart';
-import '../custom_paint/pinted_bottom_bar.dart';
-import 'animation/bottom_tile.dart';
+import '../../const/app_colors.dart';
+import '../../controller/getx_controller.dart';
+import '../../custom_paint/pinted_bottom_bar.dart';
+import '../animation/bottom_tile.dart';
 
 Widget bottombar(){
   return GetBuilder<MyController>(

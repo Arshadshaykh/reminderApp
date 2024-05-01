@@ -11,6 +11,7 @@ import '../custom_paint/pinted_bottom_bar.dart';
 import '../main.dart';
 import '../model/models.dart';
 import '../utils/functions.dart';
+import '../utils/widgets/dialogueBox.dart';
 
 MyController controller = Get.find();
 
@@ -258,8 +259,10 @@ class _ALarmPageState extends State<AlarmPage> {
     int hour = int.parse(time.substring(0, 2));
     int min = int.parse(time.substring(3));
     if (isActive) {
-      AwesomeNotifySevices().showScheduleNotification(
-          hour: hour, min: min, title: title, id: notiId);
+      AwesomeNotifySevices()
+          .showCallNotification(hour: hour, min: min,
+          //  title: title,
+            id: notiId);
     } else {
       AwesomeNotifySevices().cancelShaduledNotification(notiId);
     }
@@ -268,12 +271,12 @@ class _ALarmPageState extends State<AlarmPage> {
 
   Card Function(BuildContext, int) _itemBuilder(List<Alarm> alarms) {
     return (BuildContext context, int index) {
-      int hour=0;
+      int hour = 0;
       // bool isDay=false;
       if (alarms.isNotEmpty) {
         hour = int.parse(alarms[index].time!.substring(0, 2));
       }
-        bool isDay = hour >= 6 && hour <= 18;
+      bool isDay = hour >= 6 && hour <= 18;
       return Card(
         clipBehavior: Clip.hardEdge,
         elevation: 0,
@@ -330,10 +333,18 @@ class _ALarmPageState extends State<AlarmPage> {
                     children: [
                       InkWell(
                           onTap: () async {
-                            await AwesomeNotifySevices()
-                                .cancelShaduledNotification(
-                                    alarms[index].notiId);
-                            objectbox.removeAlarm(alarms[index].id);
+                            showDialogBox(
+                                context: context,
+                                title: 'Confirmation',
+                                content:
+                                    'Are you sure you want to delete this Alarm',
+                                btnText: 'Yes',
+                                onPressed: () async {
+                                  await AwesomeNotifySevices()
+                                      .cancelShaduledNotification(
+                                          alarms[index].notiId);
+                                  objectbox.removeAlarm(alarms[index].id);
+                                });
                           },
                           child: Icon(
                             Icons.close_rounded,

@@ -4,7 +4,7 @@ import 'package:reminder/const/app_colors.dart';
 import 'package:reminder/const/font_styles.dart';
 import 'package:reminder/controller/getx_controller.dart';
 
-import '../const/assets_images.dart';
+import '../../const/assets_images.dart';
 import 'add_button.dart';
 
 // class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {

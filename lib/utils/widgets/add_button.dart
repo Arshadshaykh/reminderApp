@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../const/app_colors.dart';
-import '../const/assets_images.dart';
+import '../../const/app_colors.dart';
+import '../../const/assets_images.dart';
 
 Widget addButton(String image,{Function()? callback}){
   return GestureDetector(

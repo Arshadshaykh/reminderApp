@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
-import '../controller/awes_notify_controller.dart';
-import '../main.dart';
-import 'functions.dart';
+import 'package:reminder/const/app_colors.dart';
+import 'package:reminder/const/font_styles.dart';
+import '../../controller/awes_notify_controller.dart';
+import '../../main.dart';
+import '../functions.dart';
 
-Future<dynamic> showMyBottomSheet(
-  context,
-  index,
-  {id}
-) {
+Future<dynamic> showMyBottomSheet(context, index, {id}) {
   final noteInputController = TextEditingController();
   final noteCommentController = TextEditingController();
   final alarmTitleController = TextEditingController();
-  Future<void> addAlarm(int id,String time) async {
+  Future<void> addAlarm(int id, String time) async {
     if (alarmTitleController.text.isEmpty) return;
-    await objectbox.addAlarm(id,alarmTitleController.text, time);
+    await objectbox.addAlarm(id, alarmTitleController.text, time);
     alarmTitleController.text = '';
   }
-  Future<void> updateAlarm(int id,int notiId,String time,bool isActive) async {
+
+  Future<void> updateAlarm(
+      int id, int notiId, String time, bool isActive) async {
     if (alarmTitleController.text.isEmpty) return;
-    await objectbox.updateAlarm(id,notiId,alarmTitleController.text, time,isActive);
+    await objectbox.updateAlarm(
+        id, notiId, alarmTitleController.text, time, isActive);
     alarmTitleController.text = '';
   }
 
@@ -47,6 +48,7 @@ Future<dynamic> showMyBottomSheet(
       useSafeArea: true,
       enableDrag: true,
       context: context,
+      backgroundColor: AppColors.scaffoldBG,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
@@ -66,8 +68,11 @@ Future<dynamic> showMyBottomSheet(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       TextField(
-                        decoration: const InputDecoration(hintText: 'Title'),
+                        decoration: InputDecoration(
+                            hintText: 'Title',
+                            hintStyle: TextStyle(color: AppColors.white)),
                         controller: alarmTitleController,
+                        style: TextStyle(color: AppColors.white),
                         // onSubmitted: (value) => function,
                         // Provide a Key for the integration test
                         key: const Key('input'),
@@ -83,12 +88,13 @@ Future<dynamic> showMyBottomSheet(
                                 value: Time.fromTimeOfDay(TimeOfDay.now(), 0),
                                 onChange: (v) async {
                                   await AwesomeNotifySevices()
-                                      .showScheduleNotification(
+                                      .showCallNotification(
                                           hour: v.hour,
                                           min: v.minute,
-                                          title: alarmTitleController.text,
+                                          // title: alarmTitleController.text,
                                           id: id);
-                                  addAlarm(id,extractTimeFromString(v.toString()));
+                                  addAlarm(
+                                      id, extractTimeFromString(v.toString()));
                                   Navigator.pop(context);
                                 },
                               ),
@@ -116,32 +122,21 @@ Future<dynamic> showMyBottomSheet(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           TextField(
-                            decoration:
-                                const InputDecoration(hintText: 'Title'),
+                            decoration: InputDecoration(
+                                hintText: 'Title',
+                                hintStyle: TextStyle(color: AppColors.white)),
+                            style: TextStyle(color: AppColors.white),
                             controller: noteInputController,
                             // onSubmitted: (value) => function,
                             // Provide a Key for the integration test
                             key: const Key('input'),
                           ),
                           TextField(
-                            decoration:
-                                const InputDecoration(hintText: 'Description'),
+                            decoration: InputDecoration(hintText: 'Description',hintStyle: TextStyle(color: AppColors.white)),
                             controller: noteCommentController,
+                            style: TextStyle(color: AppColors.white),
                             // onSubmitted: (value) => function,
                             // Provide a Key for the integration test
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(top: 10.0, right: 10.0),
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'Tap a note to remove it',
-                                style: TextStyle(
-                                  fontSize: 11.0,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ),
                           ),
                           ElevatedButton(
                               onPressed: () {

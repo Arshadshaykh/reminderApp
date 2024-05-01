@@ -1,16 +1,19 @@
 import 'dart:ui';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:reminder/const/app_colors.dart';
 import 'package:reminder/controller/getx_controller.dart';
-import 'package:reminder/utils/appbar.dart';
+import 'package:reminder/utils/widgets/appbar.dart';
 import 'package:reminder/views/main_pages.dart';
 import '../const/assets_images.dart';
-import '../utils/add_button.dart';
-import '../utils/bottomSheet.dart';
-import '../utils/bottombar.dart';
+import '../controller/notify_utils.dart';
+import '../utils/widgets/add_button.dart';
+import '../utils/widgets/bottomSheet.dart';
+import '../utils/widgets/bottombar.dart';
 import '../utils/functions.dart';
+import '../utils/widgets/dialogueBox.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -25,9 +28,33 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    requestPermission();
     controller.upDateAppBarTitle(0);
   }
+void requestPermission(){
 
+  AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        showDialogBox(
+          context: context,
+          title: 'Grant Notification Permission',
+          content: 'Reminder requires notificaion permission',
+          btnText: 'ok',
+          onPressed: () {
+            AwesomeNotifications().requestPermissionToSendNotifications(
+            channelKey: 'basic_channel',
+            permissions: [
+              NotificationPermission.FullScreenIntent,
+            ]);
+          },
+        );
+        // This is just a basic example. For real apps, you must show some
+        // friendly dialog box before call the request method.
+        // This is very important to not harm the user experience
+        
+      }
+    });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             height: double.infinity,
             width: double.infinity,
-            color: Color(0xff242C3B),
+            color: AppColors.scaffoldBG,
           ),
           // background image
           Positioned(
@@ -70,6 +97,7 @@ class _HomePageState extends State<HomePage> {
                         callback: () {
                           var id=generateUniqueId();
                           // return;
+                              NotificationUtils.requestFullIntentPermission(context);
                           Future.delayed(const Duration(milliseconds: 100), ()async {
                             await showMyBottomSheet(id:id,context, controller.currentIndex,);
                           });
@@ -89,6 +117,7 @@ class _HomePageState extends State<HomePage> {
                         : addButton(
                             AssetsImages.add,
                             callback: () {
+                              NotificationUtils.requestFullIntentPermission(context);
                               Future.delayed(const Duration(milliseconds: 100),
                                   () {
                                 showMyBottomSheet(

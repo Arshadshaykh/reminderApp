@@ -8,6 +8,16 @@ class MyController extends GetxController {
   int get currentIndex => _currentIndex;
   bool _switchValue = false;
   bool get switchValue => _switchValue;
+  bool _emptyNotes = false;
+  bool get emptyNotes => _emptyNotes;
+
+  void changeEmptyNotes(bool value) {
+    _emptyNotes = value;
+    update();
+  }
+
+
+
 
   void changeSwitchValue(bool value) {
     _switchValue = value;

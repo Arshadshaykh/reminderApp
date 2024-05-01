@@ -24,9 +24,9 @@ class ObjectBox {
     _todoBox = Box<Todo>(_store);
 
     // Add some demo data if the box is empty.
-    if (_noteBox.isEmpty()) {
-      _putDemoData();
-    }
+    // if (_noteBox.isEmpty()) {
+    //   _putDemoData();
+    // }
     // if (_alarmBox.isEmpty()) {
     //   _putAlarmDemoData();
     // }
