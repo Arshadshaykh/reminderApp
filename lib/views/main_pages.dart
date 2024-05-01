@@ -260,8 +260,8 @@ class _ALarmPageState extends State<AlarmPage> {
     int min = int.parse(time.substring(3));
     if (isActive) {
       AwesomeNotifySevices()
-          .showCallNotification(hour: hour, min: min,
-          //  title: title,
+          .showScheduleNotification(hour: hour, min: min,
+           title: title,
             id: notiId);
     } else {
       AwesomeNotifySevices().cancelShaduledNotification(notiId);

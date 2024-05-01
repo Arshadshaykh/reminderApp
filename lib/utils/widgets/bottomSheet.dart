@@ -88,10 +88,10 @@ Future<dynamic> showMyBottomSheet(context, index, {id}) {
                                 value: Time.fromTimeOfDay(TimeOfDay.now(), 0),
                                 onChange: (v) async {
                                   await AwesomeNotifySevices()
-                                      .showCallNotification(
+                                      .showScheduleNotification(
                                           hour: v.hour,
                                           min: v.minute,
-                                          // title: alarmTitleController.text,
+                                          title: alarmTitleController.text,
                                           id: id);
                                   addAlarm(
                                       id, extractTimeFromString(v.toString()));

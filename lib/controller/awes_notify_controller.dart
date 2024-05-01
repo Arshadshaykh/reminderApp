@@ -42,7 +42,7 @@ class AwesomeNotifySevices {
         debug: true);
   }
 
-  Future showScheduleNotification(
+  Future<void> showScheduleNotification(
       {int? hour, int? min, required String title, required int id}) async {
     String localTimeZone =
         await AwesomeNotifications().getLocalTimeZoneIdentifier();
@@ -50,59 +50,14 @@ class AwesomeNotifySevices {
         await AwesomeNotifications().getLocalTimeZoneIdentifier();
 
     await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: id,
-            channelKey: 'basic_channel',
-            title: title,
-            body: '',
-            // notificationLayout: NotificationLayout.BigPicture,
-            // bigPicture: 'asset://assets/images/melted-clock.png',
-            // category: NotificationCategory.Alarm,
-            // wakeUpScreen: true,
-            // fullScreenIntent: true,
-            // criticalAlert: true,
-            // autoDismissible: false,
-            // notificationLayout: NotificationLayout.BigText,
-             fullScreenIntent: true,
-          wakeUpScreen: true,
-          category: NotificationCategory.Reminder,
-          notificationLayout: NotificationLayout.BigPicture,
-          bigPicture: 'assets/pngs/moon.png',
-            payload: {'username': 'Arsahd',},
-
-          autoDismissible: false,),
-        // schedule: NotificationInterval(interval: 60, timeZone: localTimeZone, repeats: true,allowWhileIdle: true)
-        schedule: NotificationCalendar(
-            hour: hour,
-            minute: min,
-            preciseAlarm: true,
-            allowWhileIdle: true,
-            repeats: true),
-        actionButtons: [
-          NotificationActionButton(
-              key: 'stopButton',
-              label: 'Stop',
-              actionType: ActionType.DismissAction),
-          NotificationActionButton(key: 'snoozeButton', label: 'Snooze')
-        ]);
-  }
-
-    /* *********************************************
-      NOTIFICATION'S SPECIAL CATEGORIES
-  ************************************************ */
-
-   Future<void> showCallNotification({required int id,int? hour, int? min,}) async {
-    // Schedule only for test purposes. For real applications, you MUST
-    // create call or alarm notifications using AndroidForegroundService.
-    await AwesomeNotifications().createNotification(
         // await AndroidForegroundService.startAndroidForegroundService(
         //     foregroundStartMode: ForegroundStartMode.stick,
         //     foregroundServiceType: ForegroundServiceType.phoneCall,
         content: NotificationContent(
             id: id,
             channelKey: 'call_channel',
-            title: 'Incoming Call',
-            body: 'from Little Mary',
+            title: title,
+            body: '',
             category: NotificationCategory.Call,
             largeIcon: 'asset://assets/images/girl-phonecall.jpg',
             wakeUpScreen: true,
@@ -119,8 +74,56 @@ class AwesomeNotifySevices {
           NotificationActionButton(
               key: 'SNOOZE',
               label: 'Snooze',
-              actionType: ActionType.SilentAction,
+              actionType: ActionType.SilentBackgroundAction,
               isDangerousOption: true,
+              autoDismissible: true),
+        ],
+        // schedule: NotificationInterval(interval: timeToWait));
+        schedule: NotificationCalendar(
+            hour: hour,
+            minute: min,
+            preciseAlarm: true,
+            allowWhileIdle: true,
+            repeats: true)
+        );
+  }
+
+    /* *********************************************
+      NOTIFICATION'S SPECIAL CATEGORIES
+  ************************************************ */
+
+   Future<void> showCallNotification({required int id, required String title,int? hour, int? min,}) async {
+    // Schedule only for test purposes. For real applications, you MUST
+    // create call or alarm notifications using AndroidForegroundService.
+    await AwesomeNotifications().createNotification(
+        // await AndroidForegroundService.startAndroidForegroundService(
+        //     foregroundStartMode: ForegroundStartMode.stick,
+        //     foregroundServiceType: ForegroundServiceType.phoneCall,
+        content: NotificationContent(
+            id: id,
+            channelKey: 'call_channel',
+            title: title,
+            body: '',
+            category: NotificationCategory.Call,
+            largeIcon: 'asset://assets/images/girl-phonecall.jpg',
+            wakeUpScreen: true,
+            fullScreenIntent: true,
+            autoDismissible: false,
+            payload: {'username': 'Little Mary'}),
+        actionButtons: [
+          NotificationActionButton(
+              key: 'STOP',
+              label: 'Stop',
+              actionType: ActionType.Default,
+              color: Colors.green,
+              showInCompactView: true,
+              autoDismissible: true),
+          NotificationActionButton(
+              key: 'SNOOZE',
+              label: 'Snooze',
+              actionType: ActionType.SilentBackgroundAction,
+              isDangerousOption: true,
+              showInCompactView: true,
               autoDismissible: true),
         ],
         // schedule: NotificationInterval(interval: timeToWait));
