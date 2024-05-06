@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:reminder/const/font_styles.dart';
@@ -131,7 +132,17 @@ class TodoPage extends StatefulWidget {
 
 class _MyTodoPageState extends State<TodoPage> {
   final _noteInputController = TextEditingController();
+var noteslength;
+@override
+  void initState() {
+    // TODO: implement initState
+    getnotes();
+    super.initState();
+  }
+  getnotes()async{
+    noteslength=await objectbox.getNotes().length;
 
+  }
   @override
   void dispose() {
     _noteInputController.dispose();
@@ -162,46 +173,81 @@ class _MyTodoPageState extends State<TodoPage> {
                       ]),
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    child: InkWell(
-                      focusColor: AppColors.transparent,
-                      highlightColor: AppColors.transparent,
-                      splashColor: AppColors.transparent,
-                      onTap: () => objectbox.removeNote(notes[index].id),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            bottom: 18.0, right: 10.0, left: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              notes[index].text,
-                              style: AppStyle.headingS20W700,
-                              // Provide a Key for the integration test
-                              key: Key(
-                                'list_item_$index',
-                              ),
-                            ),
-                            (notes[index].comment == null ||
-                                    notes[index].comment == '')
-                                ? const SizedBox.shrink()
-                                : Text(
-                                    notes[index].comment ?? '',
-                                    style: AppStyle.descS15W600,
-                                    // Provide a Key for the integration test
-                                    // key: Key('list_item_$index',),
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 10.0, right: 10.0, left: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: 270,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  notes[index].text,
+                                  style: AppStyle.headingS20W700.copyWith(
+                                      shadows: [
+                                        Shadow(
+                                            color: AppColors.themeBlue,
+                                            blurRadius: 10)
+                                      ]),
+                                  // Provide a Key for the integration test
+                                  key: Key(
+                                    'list_item_$index',
                                   ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5.0),
-                              child: Text(
-                                'Added on ${notes[index].dateFormat}',
-                                style: TextStyle(
-                                  color: AppColors.white,
-                                  fontSize: 12.0,
                                 ),
-                              ),
+                                (notes[index].comment == null ||
+                                        notes[index].comment == '')
+                                    ? const SizedBox.shrink()
+                                    : Text(
+                                        notes[index].comment ?? '',
+                                        style: AppStyle.descS15W600
+                                            .copyWith(color: AppColors.white2),
+                                        // Provide a Key for the integration test
+                                        // key: Key('list_item_$index',),
+                                      ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              InkWell(
+                                  onTap: () async {
+                                    showDialogBox(
+                                        context: context,
+                                        title: 'Confirmation',
+                                        content:
+                                            'Are you sure you want to delete this Task?',
+                                        btnText: 'Yes',
+                                        onPressed: () async {
+                                          objectbox.removeNote(notes[index].id);
+                                        });
+                                  },
+                                  child: Icon(
+                                    Icons.close_rounded,
+                                    color: AppColors.white,
+                                  )),
+                                  SizedBox(height: 25,),
+                              InkWell(
+                                child: Icon(
+                                  Icons.edit,
+                                  color: AppColors.white,
+                                ),
+                              )
+                              // GetBuilder<MyController>(
+                              //     builder: ((MyController controller) {
+                              //   return Checkbox(
+                              //     value: false,
+                              //     onChanged: (v) {},
+                              //     side: BorderSide(color: AppColors.white),
+                              //   );
+                              // })),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -220,6 +266,7 @@ class _MyTodoPageState extends State<TodoPage> {
               const SizedBox(
                 height: 80,
               ),
+              noteslength.length==0?Text('hello'):
               StreamBuilder<List<Note>>(
                   stream: objectbox.getNotes(),
                   builder: (context, snapshot) => ListView.builder(
@@ -259,10 +306,8 @@ class _ALarmPageState extends State<AlarmPage> {
     int hour = int.parse(time.substring(0, 2));
     int min = int.parse(time.substring(3));
     if (isActive) {
-      AwesomeNotifySevices()
-          .showScheduleNotification(hour: hour, min: min,
-           title: title,
-            id: notiId);
+      AwesomeNotifySevices().showScheduleNotification(
+          hour: hour, min: min, title: title, id: notiId);
     } else {
       AwesomeNotifySevices().cancelShaduledNotification(notiId);
     }
@@ -304,9 +349,18 @@ class _ALarmPageState extends State<AlarmPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Image.asset(
-                    isDay ? AssetsImages.sun : AssetsImages.moon,
-                    height: 35,
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      boxShadow: [BoxShadow(
+                        color: AppColors.white2,
+                        blurRadius: 15
+                      )]
+                    ),
+                    child: Image.asset(
+                      isDay ? AssetsImages.sun : AssetsImages.moon,
+                      height: 35,
+                    ),
                   ),
                   SizedBox(
                     width: 200,
@@ -319,11 +373,21 @@ class _ALarmPageState extends State<AlarmPage> {
                             ? const SizedBox.shrink()
                             : Text(
                                 alarms[index].title ?? '',
-                                style: TextStyle(color: AppColors.white),
+                                style: TextStyle(color: AppColors.white).copyWith(
+                                      shadows: [
+                                        Shadow(
+                                            color: AppColors.white,
+                                            blurRadius: 10)
+                                      ]),
                               ),
                         Text(
                           alarms[index].time.toString() ?? '',
-                          style: AppStyle.headingS20W700,
+                          style: AppStyle.headingS20W700.copyWith(
+                                      shadows: [
+                                        Shadow(
+                                            color: AppColors.themeBlue,
+                                            blurRadius: 10)
+                                      ]),
                         ),
                       ],
                     ),
@@ -347,9 +411,11 @@ class _ALarmPageState extends State<AlarmPage> {
                                 });
                           },
                           child: Icon(
-                            Icons.close_rounded,
+                            Icons.delete_outline_rounded,
+                            size: 30,
                             color: AppColors.white,
-                          )),
+                          ),
+                          ),
                       GetBuilder<MyController>(
                         builder: (MyController controller) {
                           return Switch(

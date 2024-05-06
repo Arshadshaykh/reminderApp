@@ -10,18 +10,18 @@ class AwesomeNotifySevices {
         null,
         [
           NotificationChannel(
-              channelGroupKey: 'basic_channel_group',
-              channelKey: 'basic_channel',
-              channelName: 'Basic notifications',
-              channelDescription: 'Notification channel for basic tests',
-              defaultColor: Color(0xFF9D50DD),
-              enableVibration: true,
-              enableLights: true,
-              ledColor: Colors.white,
-              importance: NotificationImportance.Max,
-              criticalAlerts: true,),
-              
-               NotificationChannel(
+            channelGroupKey: 'basic_channel_group',
+            channelKey: 'basic_channel',
+            channelName: 'Basic notifications',
+            channelDescription: 'Notification channel for basic tests',
+            defaultColor: Color(0xFF9D50DD),
+            enableVibration: true,
+            enableLights: true,
+            ledColor: Colors.white,
+            importance: NotificationImportance.Max,
+            criticalAlerts: true,
+          ),
+          NotificationChannel(
               channelGroupKey: 'category_tests',
               channelKey: 'call_channel',
               channelName: 'Calls Channel',
@@ -31,7 +31,7 @@ class AwesomeNotifySevices {
               ledColor: Colors.white,
               channelShowBadge: true,
               locked: true,
-              defaultRingtoneType: DefaultRingtoneType.Ringtone),
+              defaultRingtoneType: DefaultRingtoneType.Alarm),
         ],
         // Channel groups are only visual and are not required
         channelGroups: [
@@ -40,127 +40,95 @@ class AwesomeNotifySevices {
               channelGroupName: 'Basic group')
         ],
         debug: true);
+    await AwesomeNotifications()
+        .isNotificationAllowed()
+        .then((isAllowed) async {
+      if (!isAllowed) {
+        await AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+
+    await AwesomeNotifications().setListeners(
+      onActionReceivedMethod: onActionReceivedMethod,
+      onDismissActionReceivedMethod: onDismissActionReceivedMethod,
+    );
   }
 
   Future<void> showScheduleNotification(
-      {int? hour, int? min, required String title, required int id}) async {
-    String localTimeZone =
-        await AwesomeNotifications().getLocalTimeZoneIdentifier();
-    String utcTimeZone =
-        await AwesomeNotifications().getLocalTimeZoneIdentifier();
-
+      {int? hour,
+      int? min,
+      required String title,
+      required int id,
+      bool? isSnooze}) async {
     await AwesomeNotifications().createNotification(
-        // await AndroidForegroundService.startAndroidForegroundService(
-        //     foregroundStartMode: ForegroundStartMode.stick,
-        //     foregroundServiceType: ForegroundServiceType.phoneCall,
-        content: NotificationContent(
-            id: id,
-            channelKey: 'call_channel',
-            title: title,
-            body: '',
-            category: NotificationCategory.Call,
-            largeIcon: 'asset://assets/images/girl-phonecall.jpg',
-            wakeUpScreen: true,
-            fullScreenIntent: true,
-            autoDismissible: false,
-            payload: {'username': 'Little Mary'}),
-        actionButtons: [
-          NotificationActionButton(
-              key: 'STOP',
-              label: 'Stop',
-              actionType: ActionType.Default,
-              color: Colors.green,
-              autoDismissible: true),
-          NotificationActionButton(
-              key: 'SNOOZE',
-              label: 'Snooze',
-              actionType: ActionType.SilentBackgroundAction,
-              isDangerousOption: true,
-              autoDismissible: true),
-        ],
-        // schedule: NotificationInterval(interval: timeToWait));
-        schedule: NotificationCalendar(
-            hour: hour,
-            minute: min,
-            preciseAlarm: true,
-            allowWhileIdle: true,
-            repeats: true)
-        );
+      // await AndroidForegroundService.startAndroidForegroundService(
+      //     foregroundStartMode: ForegroundStartMode.stick,
+      //     foregroundServiceType: ForegroundServiceType.phoneCall,
+      content: NotificationContent(
+          id: id,
+          channelKey: 'call_channel',
+          title: title,
+          body: '',
+          category: NotificationCategory.Call,
+          largeIcon: 'assets/pngs/moon.png',
+          wakeUpScreen: true,
+          fullScreenIntent: true,
+          autoDismissible: false,
+          payload: {
+            'username': 'Reschedule',
+            'title': title,
+            'hour': hour.toString(),
+            'min': min.toString()
+          }),
+      actionButtons: [
+        NotificationActionButton(
+            key: 'STOP',
+            label: 'Stop',
+            actionType: ActionType.KeepOnTop,
+            color: Colors.green,
+            autoDismissible: true),
+        NotificationActionButton(
+            key: 'SNOOZE',
+            label: 'Snooze for 5 min',
+            actionType: ActionType.KeepOnTop,
+            showInCompactView: true,
+            autoDismissible: true),
+      ],
+      // schedule: NotificationInterval(interval: timeToWait));
+      schedule: NotificationCalendar(
+          hour: hour,
+          minute: isSnooze ?? false ? min ?? 0 + 5 : min,
+          preciseAlarm: true,
+          allowWhileIdle: true,
+          repeats: true),
+    );
   }
 
-    /* *********************************************
-      NOTIFICATION'S SPECIAL CATEGORIES
-  ************************************************ */
-
-   Future<void> showCallNotification({required int id, required String title,int? hour, int? min,}) async {
-    // Schedule only for test purposes. For real applications, you MUST
-    // create call or alarm notifications using AndroidForegroundService.
-    await AwesomeNotifications().createNotification(
-        // await AndroidForegroundService.startAndroidForegroundService(
-        //     foregroundStartMode: ForegroundStartMode.stick,
-        //     foregroundServiceType: ForegroundServiceType.phoneCall,
-        content: NotificationContent(
-            id: id,
-            channelKey: 'call_channel',
-            title: title,
-            body: '',
-            category: NotificationCategory.Call,
-            largeIcon: 'asset://assets/images/girl-phonecall.jpg',
-            wakeUpScreen: true,
-            fullScreenIntent: true,
-            autoDismissible: false,
-            payload: {'username': 'Little Mary'}),
-        actionButtons: [
-          NotificationActionButton(
-              key: 'STOP',
-              label: 'Stop',
-              actionType: ActionType.Default,
-              color: Colors.green,
-              showInCompactView: true,
-              autoDismissible: true),
-          NotificationActionButton(
-              key: 'SNOOZE',
-              label: 'Snooze',
-              actionType: ActionType.SilentBackgroundAction,
-              isDangerousOption: true,
-              showInCompactView: true,
-              autoDismissible: true),
-        ],
-        // schedule: NotificationInterval(interval: timeToWait));
-        schedule: NotificationCalendar(
-            hour: hour,
-            minute: min,
-            preciseAlarm: true,
-            allowWhileIdle: true,
-            repeats: true)
-        );
+  @pragma("vm:entry-point")
+  static Future<void> onActionReceivedMethod(
+      ReceivedAction receivedAction) async {
+    final payload = receivedAction.payload ?? {};
+    // Your code goes here
+    if (receivedAction.buttonKeyPressed == "STOP") {
+      AwesomeNotifySevices().cancelShaduledNotification(receivedAction.id ?? 0);
+    }
+    if (receivedAction.buttonKeyPressed == "SNOOZE") {
+      AwesomeNotifySevices().showScheduleNotification(
+        id: receivedAction.id ?? 0,
+        isSnooze: true,
+        title: payload['title'] ?? '',
+        hour: int.parse(payload['hour'] ?? ''),
+        min: int.parse(payload['min'] ?? '') + 5,
+      );
+    }
   }
 
-   Future<void> showAlarmNotification(
-      {required int id, int secondsToWait = 30, int snoozeSeconds = 30}) async {
-    await AwesomeNotifications().createNotification(
-        content: NotificationContent(
-            id: id,
-            channelKey: 'alarm_channel',
-            title: 'Alarm is playing',
-            body: 'Hey! Wake Up!',
-            category: NotificationCategory.Alarm,
-            autoDismissible: true,
-            payload: {'snooze': '$snoozeSeconds'}),
-        actionButtons: [
-          NotificationActionButton(
-              key: 'SNOOZE',
-              label: 'Snooze for $snoozeSeconds seconds',
-              color: Colors.blue,
-              actionType: ActionType.SilentBackgroundAction,
-              autoDismissible: true),
-        ],
-        schedule: (secondsToWait < 5)
-            ? null
-            : NotificationCalendar.fromDate(
-                date: DateTime.now().add(Duration(seconds: secondsToWait))));
+  @pragma("vm:entry-point")
+  static Future<void> onDismissActionReceivedMethod(
+      ReceivedAction receivedAction) async {
+    // Your code goes here
+    print(receivedAction);
   }
-
   Future cancelShaduledNotification(int id) async {
     await AwesomeNotifications().cancel(id);
   }

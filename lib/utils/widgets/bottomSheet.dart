@@ -67,10 +67,17 @@ Future<dynamic> showMyBottomSheet(context, index, {id}) {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      TextField(
+                      TextFormField(
                         decoration: InputDecoration(
                             hintText: 'Title',
                             hintStyle: TextStyle(color: AppColors.white)),
+                            validator: (v){
+
+                              if (v!.isEmpty) {
+                                return 'Please enter a title';
+                              }
+
+                            },
                         controller: alarmTitleController,
                         style: TextStyle(color: AppColors.white),
                         // onSubmitted: (value) => function,

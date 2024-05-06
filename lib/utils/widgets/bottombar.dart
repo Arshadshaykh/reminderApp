@@ -69,30 +69,30 @@ Widget bottombar(){
                                     ),
                                   ),
                                 ),
-                          controller.currentIndex == 1
-                              ? Positioned(
-                                  top: -25,
-                                  left: 130,
-                                  child: BottomTileTranslation(
-                                    begin: 0,
-                                    end: 2,
-                                    icon: Icons.event_note_rounded,
-                                  ))
-                              : Positioned(
-                                  top: 10,
-                                  bottom: 10,
-                                  left: 195,
-                                  child: InkWell(
-                                    onTap: () {
-                                      controller.upDateAppBarTitle(1);
-                                      controller.updateCurrentIndex(1);
-                                    },
-                                    child: Icon(
-                                      Icons.event_note_rounded,
-                                      color: AppColors.white.withOpacity(0.6),
-                                    ),
-                                  ),
-                                ),
+                          // controller.currentIndex == 1
+                          //     ? Positioned(
+                          //         top: -25,
+                          //         left: 130,
+                          //         child: BottomTileTranslation(
+                          //           begin: 0,
+                          //           end: 2,
+                          //           icon: Icons.event_note_rounded,
+                          //         ))
+                          //     : Positioned(
+                          //         top: 10,
+                          //         bottom: 10,
+                          //         left: 195,
+                          //         child: InkWell(
+                          //           onTap: () {
+                          //             controller.upDateAppBarTitle(1);
+                          //             controller.updateCurrentIndex(1);
+                          //           },
+                          //           child: Icon(
+                          //             Icons.event_note_rounded,
+                          //             color: AppColors.white.withOpacity(0.6),
+                          //           ),
+                          //         ),
+                          //       ),
                           controller.currentIndex == 2
                               ? Positioned(
                                   top: -32,
